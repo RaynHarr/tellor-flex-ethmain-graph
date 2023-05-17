@@ -54,12 +54,13 @@ import {
   //}
   
   export function handleNewReport(event: NewReport): void {
-    let report = new NewReportEntity(event.block.timestamp.toHex());
+    let report = new NewReportEntity(event.transaction.hash.concatI32(event.logIndex.toI32()));
     report._nonce = event.params._nonce;
     //Gives us the original query info in json object form
     //So long as its a legacy query
     report._queryData = event.params._queryData;
     report._queryId = event.params._queryId;
+    report._blockNumber = event.block.number
     //Unix Timestamp of reporting event
     report._time = event.params._time;
     //Value that reporter responded to queryData with
